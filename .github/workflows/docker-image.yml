@@ -8,11 +8,22 @@ on:
 
 jobs:
 
-  build:
-
+  build-backend:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    - name: Build Backend Docker image
+      run: |
+        cd backend
+        docker build . --file Dockerfile --tag devops-todo-backend:$(date +%s)
+        docker tag devops-todo-backend:$(date +%s) devops-todo-backend:latest
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build Frontend Docker image
+      run: |
+        cd frontend
+        docker build . --file Dockerfile --tag devops-todo-frontend:$(date +%s)
+        docker tag devops-todo-frontend:$(date +%s) devops-todo-frontend:latest
