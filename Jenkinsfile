@@ -9,14 +9,26 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Checking out code from repository...'
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/main']],
-                    doGenerateSubmoduleConfigurations: false,
-                    extensions: [[$class: 'CleanBeforeCheckout']],
-                    userRemoteConfigs: [[url: 'https://github.com/mahadevlover/decops-to-do-app.git']]
-                ])
+                echo 'Checking out latest code from repository...'
+                script {
+                    // Force checkout of latest main branch
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: 'refs/heads/main']],
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [
+                            [$class: 'CleanBeforeCheckout'],
+                            [$class: 'WipeWorkspace']
+                        ],
+                        userRemoteConfigs: [[
+                            url: 'https://github.com/mahadevlover/decops-to-do-app.git',
+                            refspec: '+refs/heads/main:refs/remotes/origin/main'
+                        ]]
+                    ])
+                    // Verify we have the latest commit
+                    sh 'git log -1 --oneline'
+                    sh 'git rev-parse HEAD'
+                }
             }
         }
         
