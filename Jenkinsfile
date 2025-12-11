@@ -10,7 +10,13 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Checking out code from repository...'
-                checkout scm
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [[$class: 'CleanBeforeCheckout']],
+                    userRemoteConfigs: [[url: 'https://github.com/mahadevlover/decops-to-do-app.git']]
+                ])
             }
         }
         
