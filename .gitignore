@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+backend/__pycache__/
+backend/*.pyc
+*.py[cod]
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+frontend/build/
+frontend/.pnpm-store/
+dist/
+*.egg-info/
+
+# Docker
+*.log
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+/data/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jenkins
+jenkins/jenkins-data/
+
+# Monitoring
+monitoring/prometheus-data/
+monitoring/grafana-data/
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Misc
+*.bak
+*.tmp
+.cache/
