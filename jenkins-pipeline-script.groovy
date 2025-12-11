@@ -64,10 +64,10 @@ pipeline {
                     echo 'Deploying application with zero downtime...'
                     
                     // Stop old containers if running
-                    sh 'cd /workspace && docker compose down || true'
+                    sh 'cd /workspace && docker-compose down || true'
                     
                     // Start new containers
-                    sh 'cd /workspace && docker compose up -d'
+                    sh 'cd /workspace && docker-compose up -d'
                     
                     // Wait for services to be healthy
                     echo 'Waiting for services to be healthy...'
@@ -120,8 +120,8 @@ pipeline {
                 // Rollback logic
                 sh '''
                     cd /workspace
-                    docker compose down || true
-                    docker compose up -d || true
+                    docker-compose down
+                    docker-compose up -d
                 '''
             }
         }
@@ -132,3 +132,4 @@ pipeline {
         }
     }
 }
+

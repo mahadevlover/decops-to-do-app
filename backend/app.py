@@ -92,12 +92,14 @@ def update_todo(todo_id):
             return jsonify({'error': 'Todo not found'}), 404
         
         # Update todo
+        # Handle due_date - sqlite3.Row doesn't have .get() method, use dict() conversion
+        todo_dict = dict(todo)
         db.execute(
             'UPDATE todos SET title = ?, completed = ?, due_date = ? WHERE id = ?',
             (
-                data.get('title', todo['title']),
-                data.get('completed', todo['completed']),
-                data.get('due_date', todo.get('due_date')),
+                data.get('title', todo_dict['title']),
+                data.get('completed', todo_dict['completed']),
+                data.get('due_date', todo_dict.get('due_date')),
                 todo_id
             )
         )
